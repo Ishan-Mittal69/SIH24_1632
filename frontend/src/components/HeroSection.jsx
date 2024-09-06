@@ -1,37 +1,40 @@
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { Search } from 'lucide-react'
-import { useDispatch } from 'react-redux';
-import { setSearchedQuery } from '@/redux/jobSlice';
-import { useNavigate } from 'react-router-dom';
+import { Search, Building, MapPin } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { setSearchedQuery } from '@/redux/jobSlice'
+import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const HeroSection = () => {
-    const [query, setQuery] = useState("");
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [query, setQuery] = useState("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const searchJobHandler = () => {
-        dispatch(setSearchedQuery(query));
-        navigate("/browse");
+        dispatch(setSearchedQuery(query))
+        navigate("/browse")
     }
 
     return (
         <div className='text-center'>
             <div className='flex flex-col gap-5 my-10'>
-                <span className=' mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>No. 1 Job Hunt Website</span>
-                <h1 className='text-5xl font-bold'>Search, Apply & <br /> Get Your <span className='text-[#6A38C2]'>Dream Jobs</span></h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid aspernatur temporibus nihil tempora dolor!</p>
-                <div className='flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
+                <span className='mx-auto px-4 py-2 rounded-full bg-blue-100 text-blue-800 font-medium'>Official National Job Portal</span>
+                <h1 className='text-4xl font-bold'>Discover Opportunities Across All Sectors</h1>
+                <p className='max-w-2xl mx-auto'>Explore a wide range of job opportunities in both public and private sectors. From government positions to roles in leading companies, find the career that's right for you.</p>
+                <div className='flex w-[60%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
                     <input
                         type="text"
-                        placeholder='Find your dream jobs'
+                        placeholder='Search for jobs by title, skill, or company'
                         onChange={(e) => setQuery(e.target.value)}
                         className='outline-none border-none w-full'
-
                     />
-                    <Button onClick={searchJobHandler} className="rounded-r-full bg-[#6A38C2]">
+                    <Button onClick={searchJobHandler} className="rounded-r-full bg-blue-600 hover:bg-blue-700">
                         <Search className='h-5 w-5' />
                     </Button>
+                </div>
+                <div className='mt-6 text-sm text-gray-600'>
+                    <p>New to job searching? Check out our <Link to="/resources" className='text-blue-600 hover:underline'>Career Resources</Link> for tips on resume writing, interview preparation, and understanding your rights as a job seeker.</p>
                 </div>
             </div>
         </div>
