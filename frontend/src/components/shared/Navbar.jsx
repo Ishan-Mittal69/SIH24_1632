@@ -34,53 +34,61 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800">
-      <div className="flex dark:items-center justify-between mx-auto max-w-7xl h-16">
-        <div>
+    <nav className="bg-white dark:bg-gray-900 shadow-md">
+      <div className="container mx-auto flex items-center justify-between h-16 px-4">
+        <div className="flex items-center">
           <h1 className="text-2xl font-bold text-black dark:text-white">
-            Job
-            <span className="text-[#F83002] dark:text-[#F83002]">Portal</span>
+            Bharat
+            <span className="text-[#F83002] dark:text-[#F83002]">Path</span>
           </h1>
         </div>
-        <div className="flex items-center gap-12">
-          <ul className="flex font-medium items-center gap-5 text-black dark:text-white">
+        <div className="flex items-center gap-8">
+          <ul className="flex font-medium items-center gap-6 text-black dark:text-white">
             {user && user.role === "recruiter" ? (
               <>
                 <li>
-                  <Link to="/admin/companies">Companies</Link>
+                  <Link to="/admin/companies" className="hover:text-[#F83002]">
+                    Companies
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/admin/jobs">Jobs</Link>
+                  <Link to="/admin/jobs" className="hover:text-[#F83002]">
+                    Jobs
+                  </Link>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/" className="hover:text-[#F83002]">
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/jobs">Jobs</Link>
+                  <Link to="/jobs" className="hover:text-[#F83002]">
+                    Jobs
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/browse">Browse</Link>
+                  <Link to="/browse" className="hover:text-[#F83002]">
+                    Browse
+                  </Link>
                 </li>
                 <li>
                   <ThemeToggle />
-                </li>
-                <li className="w-full max-w-[200px]">
-                  <div className="flex justify-center">
-                    <div className="inline-block w-full">
-                      <GoogleTranslate />
-                    </div>
-                  </div>
                 </li>
               </>
             )}
           </ul>
           {!user ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <Link to="/login">
-                <Button variant="outline">Login</Button>
+                <Button
+                  variant="outline"
+                  className="border-[#F83002] text-[#F83002] hover:bg-[#F83002] hover:text-white"
+                >
+                  Login
+                </Button>
               </Link>
               <Link to="/signup">
                 <Button className="bg-[#6A38C2] hover:bg-[#5b30a6]">
@@ -94,58 +102,34 @@ const Navbar = () => {
                 <Avatar className="cursor-pointer">
                   <AvatarImage
                     src={user?.profile?.profilePhoto}
-                    alt="@shadcn"
+                    alt="User Avatar"
                   />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="w-80 dark:bg-gray-700 dark:text-white">
-                <div className="">
-                  <div className="flex gap-2 space-y-2">
-                    <Avatar className="cursor-pointer">
-                      <AvatarImage
-                        src={user?.profile?.profilePhoto}
-                        alt="@shadcn"
-                      />
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium text-black dark:text-white">
-                        {user?.fullname}
-                      </h4>
-                      <p className="text-sm text-muted-foreground dark:text-gray-400">
-                        {user?.profile?.bio}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col my-2 text-gray-600 dark:text-gray-300">
-                    {user && user.role === "student" && (
-                      <div className="flex w-fit items-center gap-2 cursor-pointer">
-                        <User2 />
-                        <Button
-                          variant="link"
-                          className="text-black dark:text-white"
-                        >
-                          <Link to="/profile">View Profile</Link>
-                        </Button>
-                      </div>
-                    )}
-                    <div className="flex w-fit items-center gap-2 cursor-pointer">
-                      <LogOut />
-                      <Button
-                        onClick={logoutHandler}
-                        variant="link"
-                        className="text-black dark:text-white"
-                      >
-                        Logout
-                      </Button>
-                    </div>
-                  </div>
+                <div className="flex flex-col items-start p-4">
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 mb-2 hover:text-[#F83002]"
+                  >
+                    <User2 className="h-5 w-5" />
+                    Profile
+                  </Link>
+                  <button
+                    onClick={logoutHandler}
+                    className="flex items-center gap-2 text-red-600 hover:text-red-800"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    Logout
+                  </button>
                 </div>
               </PopoverContent>
             </Popover>
           )}
+          <GoogleTranslate className="max-w-28"/>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
