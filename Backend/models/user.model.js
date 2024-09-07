@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema(
       enum: ["student", "recruiter", "admin"],
       required: true,
     },
+    location: {
+      type: String, //space separated : city state country
+    },
     profile: {
       bio: { type: String },
       skills: [{ type: String }],

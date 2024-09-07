@@ -123,8 +123,17 @@ export const logout = async (req, res) => {
 };
 export const updateProfile = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, bio, skills, preferedRoles } =
-      req.body;
+    const {
+      fullname,
+      email,
+      phoneNumber,
+      bio,
+      skills,
+      preferedRoles,
+      city,
+      state,
+      country,
+    } = req.body;
 
     const file = req.file;
     // cloudinary ayega idhar
@@ -151,6 +160,9 @@ export const updateProfile = async (req, res) => {
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
     if (preferedRoles) user.profile.preferedRoles.push(preferedRoles);
+    if (city && state && country) {
+      user.location = `${city} ${state} ${country}`;
+    }
 
     // resume comes later here...
     if (cloudResponse) {
