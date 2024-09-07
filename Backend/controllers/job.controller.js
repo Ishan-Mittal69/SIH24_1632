@@ -56,34 +56,116 @@ export const postJob = async (req, res) => {
   }
 };
 // student k liye
+// export const getAllJobs = async (req, res) => {
+//   try {
+//     const keyword = req.query.keyword || "";
+//     const query = {
+//       $or: [
+//         { title: { $regex: keyword, $options: "i" } },
+//         { description: { $regex: keyword, $options: "i" } },
+//       ],
+//     };
+//     const jobs = await Job.find(query)
+//       .populate({
+//         path: "company",
+//       })
+//       .sort({ createdAt: -1 });
+//     if (!jobs) {
+//       return res.status(404).json({
+//         message: "Jobs not found.",
+//         success: false,
+//       });
+//     }
+//     return res.status(200).json({
+//       jobs,
+//       success: true,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+import axios from "axios";
+import { User } from "../models/user.model.js";
+
 export const getAllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
-    const query = {
-      $or: [
-        { title: { $regex: keyword, $options: "i" } },
-        { description: { $regex: keyword, $options: "i" } },
-      ],
-    };
-    const jobs = await Job.find(query)
-      .populate({
-        path: "company",
-      })
-      .sort({ createdAt: -1 });
-    if (!jobs) {
+    let jobs;
+
+    if (keyword == "my") {
+      // Extract skills and location from user model
+      const userId = req.id;
+      console.log("user id is", userId);
+      const user = await User.findById(userId);
+      const skills = user.profile.skills;
+      const location = user.location;
+      console.log(skills);
+      console.log(location);
+      console.log(location);
+      try {
+        const response = await axios.post(
+          "https://recommendation-system-f6se.onrender.com/api",
+          {
+            skills,
+            location,
+          }
+        );
+        // console.log(response);
+        const jobIds = response.data.indices;
+        console.log("After fetching jobIds");
+        console.log(jobIds);
+
+        // Fetch jobs using the jobIds
+        jobs = await Job.find({ jobId: { $in: jobIds } }).populate({
+          path: "company",
+        });
+
+        console.log(jobs);
+      } catch (err) {
+        console.log(err);
+        return res.status(404).json({
+          message: "Jobs not found.",
+          success: false,
+        });
+      }
+    } else {
+      // Construct query for keyword search
+      const query = {
+        $or: [
+          { title: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      };
+
+      // Fetch jobs based on the keyword query
+      jobs = await Job.find(query)
+        .populate({
+          path: "company",
+        })
+        .sort({ createdAt: -1 });
+    }
+
+    if (!jobs || jobs.length === 0) {
       return res.status(404).json({
         message: "Jobs not found.",
         success: false,
       });
     }
+
     return res.status(200).json({
       jobs,
       success: true,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Server error.",
+      success: false,
+    });
   }
 };
+
 // student
 export const getJobById = async (req, res) => {
   try {
