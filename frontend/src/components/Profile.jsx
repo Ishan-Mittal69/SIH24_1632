@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Contact, Mail, Pen, Briefcase } from 'lucide-react'
+import { Contact, Mail, Pen, Briefcase, MapPin } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
@@ -50,11 +50,28 @@ const Profile = () => {
                         </div>
 
                         <div className='mb-6'>
+                            <div className='flex items-center gap-3'>
+                                <MapPin className="text-gray-500 dark:text-gray-400" />
+                                <span className="text-gray-800 dark:text-gray-200">
+                                    {user?.profile?.city || user?.profile?.state || user?.profile?.country
+                                        ? `${user.profile.city || ''} ${user.profile.state || ''} ${user.profile.country || ''}`.trim()
+                                        : "Location not available"}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className='mb-6'>
                             <h2 className="text-lg font-semibold mb-2 dark:text-white">Skills</h2>
                             <div className='flex flex-wrap gap-2'>
                                 {user?.profile?.skills && user.profile.skills.length > 0 
                                     ? user.profile.skills.map((item, index) => (
-                                        <Badge key={index} className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">{item}</Badge>
+                                        <Badge 
+                                            key={index} 
+                                            className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 cursor-pointer transition-all duration-200 ease-in-out hover:bg-blue-200 dark:hover:bg-blue-800"
+                                            title="Click to view details"
+                                        >
+                                            {item}
+                                        </Badge>
                                     )) 
                                     : <span className="text-gray-500 dark:text-gray-400">No skills listed</span>
                                 }
