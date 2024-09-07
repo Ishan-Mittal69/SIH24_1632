@@ -154,13 +154,19 @@ export const updateProfile = async (req, res) => {
       });
     }
     // updating data
+    console.log(city, state, country);
+    console.log(preferedRoles);
     if (fullname) user.fullname = fullname;
     if (email) user.email = email;
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
-    if (preferedRoles) user.profile.preferedRoles.push(preferedRoles);
+    if (preferedRoles) {
+      console.log("preferedRoles");
+      user.profile.preferedRoles.push(preferedRoles);
+    }
     if (city && state && country) {
+      console.log("city state country");
       user.location = `${city} ${state} ${country}`;
     }
 
