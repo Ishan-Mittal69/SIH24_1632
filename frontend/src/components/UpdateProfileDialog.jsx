@@ -20,7 +20,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         phoneNumber: user?.phoneNumber || "",
         bio: user?.profile?.bio || "",
         skills: user?.profile?.skills?.map(skill => skill) || "",
-        file: user?.profile?.resume || ""
+        file: user?.profile?.resume || "",
+        city: user?.profile?.city || "",
+        state: user?.profile?.state || "",
+        country: user?.profile?.country || ""
     });
     const dispatch = useDispatch();
 
@@ -41,6 +44,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("bio", input.bio);
         formData.append("skills", input.skills);
+        formData.append("city", input.city);
+        formData.append("state", input.state);
+        formData.append("country", input.country);
         if (input.file) {
             formData.append("file", input.file);
         }
@@ -66,8 +72,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         console.log(input);
     }
 
-
-
     return (
         <div>
             <Dialog open={open}>
@@ -78,10 +82,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                     <form onSubmit={submitHandler}>
                         <div className='grid gap-4 py-4'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name" className="text-right">Name</Label>
+                                <Label htmlFor="fullname" className="text-right">Name</Label>
                                 <Input
-                                    id="name"
-                                    name="name"
+                                    id="fullname"
+                                    name="fullname"
                                     type="text"
                                     value={input.fullname}
                                     onChange={changeEventHandler}
@@ -100,10 +104,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="number" className="text-right">Number</Label>
+                                <Label htmlFor="phoneNumber" className="text-right">Number</Label>
                                 <Input
-                                    id="number"
-                                    name="number"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
                                     value={input.phoneNumber}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
@@ -125,6 +129,36 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     id="skills"
                                     name="skills"
                                     value={input.skills}
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="city" className="text-right">City</Label>
+                                <Input
+                                    id="city"
+                                    name="city"
+                                    value={input.city}
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="state" className="text-right">State</Label>
+                                <Input
+                                    id="state"
+                                    name="state"
+                                    value={input.state}
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="country" className="text-right">Country</Label>
+                                <Input
+                                    id="country"
+                                    name="country"
+                                    value={input.country}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
                                 />
