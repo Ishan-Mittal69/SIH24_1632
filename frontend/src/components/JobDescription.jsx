@@ -141,7 +141,7 @@ const JobDescription = () => {
         <h1 className="font-bold my-1 dark:text-white">
           Posted Date:{" "}
           <span className="pl-4 font-normal text-gray-800 dark:text-gray-300">
-            {singleJob?.createdAt.split("T")[0]}
+              {singleJob?.createdAt ? singleJob.createdAt.split("T")[0] : "Not available"}
           </span>
         </h1>
       </div>
